@@ -1,228 +1,115 @@
-# MK VPN Premium - SSH Script Manager
+# MK VPN Premium
 
-MK VPN Premium is a professional SSH script manager designed for Ubuntu 20.04 and above. It provides a comprehensive set of tools for managing SSH connections, keys, tunnels, and server configurations.
+A comprehensive SSH, Tunnel, Proxy, and VPN management solution for Ubuntu servers.
 
 ## Features
 
-- **SSH Key Management**: Generate, list, and delete SSH keys
-- **SSH Connection Management**: Add, list, connect to, and delete SSH connections
-- **SSH Server Management**: Configure and manage SSH server settings
-- **SSH Tunnel Management**: Create and manage local, remote, and dynamic SSH tunnels
-- **Security Features**: Integrated firewall and fail2ban setup
-- **Backup and Restore**: Backup and restore SSH configurations
+- SSH User Management
+- SSH Tunnel Management
+- Proxy Server Setup (Squid, SOCKS5, HTTP)
+- VPN Server Setup (OpenVPN, WireGuard, IKEv2)
+- Extra Tools (STunnel, BadVPN, Cloudflare WebSocket, UDPGW)
+- System Monitoring Tools
 
-## Installation
-
-### Prerequisites
+## Requirements
 
 - Ubuntu 20.04 or higher
 - Root access
-- Installation key: `457251`
+- Internet connection
 
-### Installation Steps
+## Quick Installation
 
-1. Download the installation package:
-
-```bash
-git clone https://github.com/mkkelati/mk-vpn-premium.git
-cd mk-vpn-premium
-```
-
-2. Make the installation script executable:
+Use our one-line installation command:
 
 ```bash
-chmod +x install.sh
+curl -s https://raw.githubusercontent.com/mkkelati/mk-vpn-premium/main/one-line-install.sh | bash
 ```
 
-3. Run the installation script:
+Or with wget:
 
 ```bash
-sudo ./install.sh
+wget -O - https://raw.githubusercontent.com/mkkelati/mk-vpn-premium/main/one-line-install.sh | bash
 ```
 
-4. Enter the installation key when prompted: `457251`
+## Manual Installation
 
-5. After installation, you can use the `mk-vpn` command from anywhere in the system.
+If you prefer to install manually:
+
+```bash
+# Update system
+apt-get update -y
+apt-get upgrade -y
+
+# Install git
+apt-get install -y git
+
+# Clone repository
+git clone https://github.com/mkkelati/mk-vpn-premium.git /root/mk-vpn-premium
+
+# Make scripts executable
+chmod +x /root/mk-vpn-premium/mk-vpn.sh
+chmod +x /root/mk-vpn-premium/install.sh
+chmod +x /root/mk-vpn-premium/direct-install.sh
+chmod +x /root/mk-vpn-premium/scripts/*.sh
+
+# Run installation script
+cd /root/mk-vpn-premium
+./direct-install.sh
+```
 
 ## Usage
 
-### Basic Commands
+After installation, you can access MK VPN Premium by running:
 
 ```bash
-# Display help
-mk-vpn help
-
-# Install MK VPN Premium
-mk-vpn install 457251
-
-# Uninstall MK VPN Premium
-mk-vpn uninstall
+mk-vpn
 ```
 
-### SSH Key Management
+This will display the main menu with all available options.
 
-```bash
-# Generate SSH key
-mk-vpn key generate my_key
+## SSH Management
 
-# List SSH keys
-mk-vpn key list
+- Create SSH User: Create a new SSH user with password authentication
+- Delete SSH User: Remove an existing SSH user
+- Renew SSH User: Extend the expiration date of an SSH user
+- Check SSH Users: List all SSH users with their expiration dates
 
-# Delete SSH key
-mk-vpn key delete my_key
-```
+## Tunnel Management
 
-### SSH Connection Management
+- Create SSH Tunnel: Set up a new SSH tunnel (local, remote, or dynamic)
+- Delete SSH Tunnel: Remove an existing SSH tunnel
+- Check SSH Tunnels: List all configured SSH tunnels
 
-```bash
-# Add SSH connection
-mk-vpn conn add server1 192.168.1.100 root 22 my_key
+## Proxy Management
 
-# List SSH connections
-mk-vpn conn list
+- Setup Squid Proxy: Install and configure Squid proxy server
+- Setup SOCKS5 Proxy: Install and configure SOCKS5 proxy server
+- Setup HTTP Proxy: Install and configure HTTP proxy server
 
-# Connect to SSH server
-mk-vpn conn connect server1
+## VPN Management
 
-# Delete SSH connection
-mk-vpn conn delete server1
-```
+- Setup OpenVPN: Install and configure OpenVPN server
+- Setup WireGuard: Install and configure WireGuard VPN server
+- Setup IKEv2: Install and configure IKEv2/IPsec VPN server
 
-### SSH Server Management
+## Extra Tools
 
-```bash
-# Display SSH server status
-mk-vpn server status
+- Setup STunnel: Install and configure STunnel for SSL tunneling
+- Setup BadVPN: Install and configure BadVPN for UDP forwarding
+- Setup Cloudflare WS: Install and configure Cloudflare WebSocket proxy
+- Setup UDPGW: Set up UDP Gateway for improved UDP performance
 
-# Start SSH server
-mk-vpn server start
+## System Tools
 
-# Stop SSH server
-mk-vpn server stop
-
-# Restart SSH server
-mk-vpn server restart
-
-# Configure SSH server
-mk-vpn server config
-```
-
-### SSH Tunnel Management
-
-```bash
-# Create local SSH tunnel
-mk-vpn tunnel create local proxy 8080 example.com 80 server1
-
-# Create remote SSH tunnel
-mk-vpn tunnel create remote proxy 8080 localhost 80 server1
-
-# Create dynamic SSH tunnel (SOCKS proxy)
-mk-vpn tunnel create dynamic proxy 8080 - - server1
-
-# List SSH tunnels
-mk-vpn tunnel list
-
-# Start SSH tunnel
-mk-vpn tunnel start proxy
-
-# Stop SSH tunnel
-mk-vpn tunnel stop proxy
-
-# Delete SSH tunnel
-mk-vpn tunnel delete proxy
-```
-
-### Backup and Restore
-
-```bash
-# Backup SSH configuration
-mk-vpn backup
-
-# Restore SSH configuration
-mk-vpn restore /path/to/backup/file.tar.gz
-```
-
-## Uploading to GitHub
-
-To upload MK VPN Premium to GitHub, follow these steps:
-
-1. Create a new repository on GitHub:
-   - Go to [GitHub](https://github.com/)
-   - Click on the "+" icon in the top right corner and select "New repository"
-   - Enter "mk-vpn-premium" as the repository name
-   - Choose whether to make it public or private
-   - Click "Create repository"
-
-2. Initialize Git in your local project directory:
-
-```bash
-cd mk-vpn-premium
-git init
-```
-
-3. Add all files to Git:
-
-```bash
-git add .
-```
-
-4. Commit the changes:
-
-```bash
-git commit -m "Initial commit of MK VPN Premium"
-```
-
-5. Add the GitHub repository as a remote:
-
-```bash
-git remote add origin https://github.com/mkkelati/mk-vpn-premium.git
-```
-
-6. Push the code to GitHub:
-
-```bash
-git push -u origin master
-```
-
-7. Your code is now available on GitHub at `https://github.com/mkkelati/mk-vpn-premium`
-
-## Installing on a Server
-
-To install MK VPN Premium on any Ubuntu server (version 20.04 or higher), follow these steps:
-
-1. Connect to your server via SSH:
-
-```bash
-ssh user@your-server-ip
-```
-
-2. Clone the repository:
-
-```bash
-git clone https://github.com/mkkelati/mk-vpn-premium.git
-cd mk-vpn-premium
-```
-
-3. Make the installation script executable:
-
-```bash
-chmod +x install.sh
-```
-
-4. Run the installation script:
-
-```bash
-sudo ./install.sh
-```
-
-5. Enter the installation key when prompted: `457251`
-
-6. After installation, you can use the `mk-vpn` command from anywhere in the system.
+- Check System Status: Display system resource usage and service status
+- Check Port Status: List all open ports and established connections
+- Backup Users: Create a backup of all user accounts
+- Restore Users: Restore user accounts from a backup
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Author
+## Support
 
-MK VPN Premium Team 
+For support, please open an issue on GitHub or contact the MK VPN Premium Team. 
