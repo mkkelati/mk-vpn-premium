@@ -24,7 +24,7 @@ MK VPN Premium is a professional SSH script manager designed for Ubuntu 20.04 an
 1. Download the installation package:
 
 ```bash
-git clone https://github.com/yourusername/mk-vpn-premium.git
+git clone https://github.com/mkkelati/mk-vpn-premium.git
 cd mk-vpn-premium
 ```
 
@@ -175,7 +175,7 @@ git commit -m "Initial commit of MK VPN Premium"
 5. Add the GitHub repository as a remote:
 
 ```bash
-git remote add origin https://github.com/yourusername/mk-vpn-premium.git
+git remote add origin https://github.com/mkkelati/mk-vpn-premium.git
 ```
 
 6. Push the code to GitHub:
@@ -184,7 +184,7 @@ git remote add origin https://github.com/yourusername/mk-vpn-premium.git
 git push -u origin master
 ```
 
-7. Your code is now available on GitHub at `https://github.com/yourusername/mk-vpn-premium`
+7. Your code is now available on GitHub at `https://github.com/mkkelati/mk-vpn-premium`
 
 ## Installing on a Server
 
@@ -199,7 +199,7 @@ ssh user@your-server-ip
 2. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/mk-vpn-premium.git
+git clone https://github.com/mkkelati/mk-vpn-premium.git
 cd mk-vpn-premium
 ```
 
