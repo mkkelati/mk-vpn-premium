@@ -20,6 +20,7 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
+WHITE='\033[1;37m'
 NC='\033[0m' # No Color
 
 # Log file
@@ -36,13 +37,80 @@ log() {
 # Function to display banner
 display_banner() {
     clear
-    echo -e "${BLUE}================================================================${NC}"
-    echo -e "${GREEN}                   MK VPN PREMIUM                              ${NC}"
-    echo -e "${GREEN}                 SSH SCRIPT MANAGER                            ${NC}"
-    echo -e "${BLUE}================================================================${NC}"
-    echo -e "${YELLOW}                    Version 1.0.0                             ${NC}"
-    echo -e "${BLUE}================================================================${NC}"
-    echo ""
+    echo -e "${BLUE}═══════════════════════════════════════════════════${NC}"
+    echo -e "${WHITE}               MK VPN PREMIUM MANAGER              ${NC}"
+    echo -e "${BLUE}═══════════════════════════════════════════════════${NC}"
+    echo -e "${GREEN}                    MAIN MENU                      ${NC}"
+    echo -e "${BLUE}═══════════════════════════════════════════════════${NC}"
+}
+
+# Function to display menu
+display_menu() {
+    echo -e "\n${WHITE}SSH MANAGEMENT${NC}"
+    echo -e "${CYAN}[01]${NC} • ${WHITE}Create SSH User${NC}"
+    echo -e "${CYAN}[02]${NC} • ${WHITE}Delete SSH User${NC}"
+    echo -e "${CYAN}[03]${NC} • ${WHITE}Renew SSH User${NC}"
+    echo -e "${CYAN}[04]${NC} • ${WHITE}Check SSH Users${NC}"
+    
+    echo -e "\n${WHITE}TUNNEL MANAGEMENT${NC}"
+    echo -e "${CYAN}[05]${NC} • ${WHITE}Create SSH Tunnel${NC}"
+    echo -e "${CYAN}[06]${NC} • ${WHITE}Delete SSH Tunnel${NC}"
+    echo -e "${CYAN}[07]${NC} • ${WHITE}Check SSH Tunnels${NC}"
+    
+    echo -e "\n${WHITE}PROXY MANAGEMENT${NC}"
+    echo -e "${CYAN}[08]${NC} • ${WHITE}Setup Squid Proxy${NC}"
+    echo -e "${CYAN}[09]${NC} • ${WHITE}Setup SOCKS5 Proxy${NC}"
+    echo -e "${CYAN}[10]${NC} • ${WHITE}Setup HTTP Proxy${NC}"
+    
+    echo -e "\n${WHITE}VPN MANAGEMENT${NC}"
+    echo -e "${CYAN}[11]${NC} • ${WHITE}Setup OpenVPN${NC}"
+    echo -e "${CYAN}[12]${NC} • ${WHITE}Setup WireGuard${NC}"
+    echo -e "${CYAN}[13]${NC} • ${WHITE}Setup IKEv2${NC}"
+    
+    echo -e "\n${WHITE}EXTRA TOOLS${NC}"
+    echo -e "${CYAN}[14]${NC} • ${WHITE}Setup STunnel${NC}"
+    echo -e "${CYAN}[15]${NC} • ${WHITE}Setup BadVPN${NC}"
+    echo -e "${CYAN}[16]${NC} • ${WHITE}Setup Cloudflare WS${NC}"
+    echo -e "${CYAN}[17]${NC} • ${WHITE}Setup UDPGW${NC}"
+    
+    echo -e "\n${WHITE}SYSTEM TOOLS${NC}"
+    echo -e "${CYAN}[18]${NC} • ${WHITE}Check System Status${NC}"
+    echo -e "${CYAN}[19]${NC} • ${WHITE}Check Port Status${NC}"
+    echo -e "${CYAN}[20]${NC} • ${WHITE}Backup Users${NC}"
+    echo -e "${CYAN}[21]${NC} • ${WHITE}Restore Users${NC}"
+    
+    echo -e "\n${CYAN}[00]${NC} • ${RED}Exit Script${NC}"
+    echo -e "${BLUE}═══════════════════════════════════════════════════${NC}"
+}
+
+# Function to handle menu selection
+handle_menu() {
+    read -p "Select Menu : " choice
+    case $choice in
+        01|1) create_ssh_user ;;
+        02|2) delete_ssh_user ;;
+        03|3) renew_ssh_user ;;
+        04|4) check_ssh_users ;;
+        05|5) create_ssh_tunnel ;;
+        06|6) delete_ssh_tunnel ;;
+        07|7) check_ssh_tunnels ;;
+        08|8) setup_squid_proxy ;;
+        09|9) setup_socks5_proxy ;;
+        10) setup_http_proxy ;;
+        11) setup_openvpn ;;
+        12) setup_wireguard ;;
+        13) setup_ikev2 ;;
+        14) setup_stunnel ;;
+        15) setup_badvpn ;;
+        16) setup_cloudflare_ws ;;
+        17) setup_udpgw ;;
+        18) check_system_status ;;
+        19) check_port_status ;;
+        20) backup_users ;;
+        21) restore_users ;;
+        00|0) exit 0 ;;
+        *) echo -e "${RED}Invalid option${NC}" ; sleep 1 ;;
+    esac
 }
 
 # Function to check if running as root
@@ -701,48 +769,12 @@ display_help() {
 
 # Main function
 main() {
-    # Create directories if they don't exist
-    mkdir -p "$CONFIG_DIR" "$SCRIPTS_DIR" "$LOGS_DIR"
-    
-    # Parse command line arguments
-    local command="$1"
-    shift
-    
-    case "$command" in
-        "install")
-            install_mk_vpn "$1"
-            ;;
-        "uninstall")
-            uninstall_mk_vpn
-            ;;
-        "key")
-            manage_ssh_keys "$@"
-            ;;
-        "conn")
-            manage_ssh_connections "$@"
-            ;;
-        "server")
-            manage_ssh_server "$@"
-            ;;
-        "tunnel")
-            manage_ssh_tunnels "$@"
-            ;;
-        "backup")
-            backup_ssh_config
-            ;;
-        "restore")
-            restore_ssh_config "$1"
-            ;;
-        "help"|"")
-            display_help
-            ;;
-        *)
-            echo -e "${RED}Invalid command: $command${NC}"
-            display_help
-            exit 1
-            ;;
-    esac
+    while true; do
+        display_banner
+        display_menu
+        handle_menu
+    done
 }
 
-# Run main function
-main "$@" 
+# Start script
+main 
