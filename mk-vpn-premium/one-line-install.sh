@@ -31,19 +31,34 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-# Download the direct installation script
-echo -e "${YELLOW}Downloading installation script...${NC}"
-cd /root
-wget -O direct-install.sh https://raw.githubusercontent.com/mkkelati/mk-vpn-premium/main/direct-install.sh
+# Install git if not installed
+echo -e "${YELLOW}Checking and installing git...${NC}"
+apt-get update -y > /dev/null 2>&1
+apt-get install -y git > /dev/null 2>&1
 
-# Make it executable
-chmod +x direct-install.sh
+# Clone the repository directly
+echo -e "${YELLOW}Downloading MK VPN Premium...${NC}"
+cd /root
+rm -rf mk-vpn-premium
+git clone https://github.com/mkkelati/mk-vpn-premium.git
+
+# Check if clone was successful
+if [ ! -d "/root/mk-vpn-premium" ]; then
+    echo -e "${RED}Failed to download MK VPN Premium. Please check your internet connection and try again.${NC}"
+    exit 1
+fi
+
+# Make scripts executable
+echo -e "${YELLOW}Setting up MK VPN Premium...${NC}"
+chmod +x /root/mk-vpn-premium/direct-install.sh
+chmod +x /root/mk-vpn-premium/mk-vpn.sh
+chmod +x /root/mk-vpn-premium/install.sh
+chmod +x /root/mk-vpn-premium/scripts/*.sh 2>/dev/null
+chmod +x /root/mk-vpn-premium/examples/*.sh 2>/dev/null
 
 # Run the installation script
 echo -e "${YELLOW}Running installation script...${NC}"
+cd /root/mk-vpn-premium
 ./direct-install.sh
-
-# Clean up
-rm -f direct-install.sh
 
 echo -e "${GREEN}Installation process completed!${NC}" 
